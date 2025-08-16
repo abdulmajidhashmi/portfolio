@@ -17,6 +17,8 @@ const Portfolio = () => {
   const sectionRefs = {
     hero: useRef(null),
     about: useRef(null),
+    education: useRef(null),
+    experience: useRef(null),
     work: useRef(null),
     skills: useRef(null),
     contact: useRef(null)
@@ -24,37 +26,37 @@ const Portfolio = () => {
 
 
   // Scroll observer for active section - FIXED VERSION
-            useEffect(() => {
-                const observerOptions = {
-                    threshold: 0.3, // Lowered threshold
-                    rootMargin: '-20% 0px -20% 0px' // Adjusted margins
-                };
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.3, // Lowered threshold
+      rootMargin: '-20% 0px -20% 0px' // Adjusted margins
+    };
 
-                const observer = new IntersectionObserver((entries) => {
-                    let maxRatio = 0;
-                    let activeEntry = null;
+    const observer = new IntersectionObserver((entries) => {
+      let maxRatio = 0;
+      let activeEntry = null;
 
-                    entries.forEach((entry) => {
-                        if (entry.intersectionRatio > maxRatio) {
-                            maxRatio = entry.intersectionRatio;
-                            activeEntry = entry;
-                        }
-                    });
+      entries.forEach((entry) => {
+        if (entry.intersectionRatio > maxRatio) {
+          maxRatio = entry.intersectionRatio;
+          activeEntry = entry;
+        }
+      });
 
-                    if (activeEntry && activeEntry.intersectionRatio > 0.3) {
-                        setActiveSection(activeEntry.target.id);
-                    }
-                }, observerOptions);
+      if (activeEntry && activeEntry.intersectionRatio > 0.3) {
+        setActiveSection(activeEntry.target.id);
+      }
+    }, observerOptions);
 
-                // Observe all sections
-                Object.entries(sectionRefs).forEach(([key, ref]) => {
-                    if (ref.current) {
-                        observer.observe(ref.current);
-                    }
-                });
+    // Observe all sections
+    Object.entries(sectionRefs).forEach(([key, ref]) => {
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+    });
 
-                return () => observer.disconnect();
-            }, []);
+    return () => observer.disconnect();
+  }, []);
 
   const scrollToSection = (sectionId) => {
     const element = sectionRefs[sectionId]?.current;
@@ -121,6 +123,44 @@ const Portfolio = () => {
     }
   ];
 
+  const education = [
+    {
+      type: 'Course',
+      degree: 'DSA , LLD & HLD',
+      field: 'Software Development Engineering',
+      institution: 'Scaler Academy',
+      duration: '2022 - 2024',
+      description: 'Specialization in Software Development and Problem Solving, with a strong foundation in algorithms, data structures, software engineering, and web development.'
+    },
+    {
+      type: 'Bachelor\'s Degree',
+      degree: 'Bachelor of Technology',
+      field: 'Mechanical Engineering',
+      institution: 'Marathwada Institute Of Technology, Aurangabad',
+      duration: '2018 - 2022',
+      description: 'Comprehensive study of Mechanical Engineering with a strong foundation in core engineering principles, problem-solving, and analytical thinking.'
+    }
+
+  ];
+  const workExperience = [
+    {
+      type: 'Internship',
+      position: 'React Developer Intern',
+      company: 'Lexon IT Solution Pvt Ltd.',
+      duration: '4 Months (Jan 2025 - April 2025)',
+      location: 'Bengaluru, Karnataka, India · Remote',
+      description: 'Gained hands-on experience in full-stack development, working with modern web technologies and contributing to real-world projects. Collaborated with senior developers and learned industry best practices.',
+      responsibilities: [
+        'Developed responsive web applications using React.js and modern JavaScript',
+        'Built RESTful APIs using Node.js and Express.js',
+        'Worked with databases including MongoDB and MySQL',
+        'Collaborated with cross-functional teams using Git for version control',
+        'Participated in code reviews and followed agile development practices',
+        'Debugged and optimized existing codebase for better performance'
+      ],
+      technologies: ['React.js', 'React Native', 'Node.js', 'Express.js', 'MongoDB', 'MySQL', 'JavaScript', 'Git']
+    }
+  ];
   const skills = [
     { icon: Code, name: 'HTML5', level: 95, category: 'Frontend' },
     { icon: Code, name: 'CSS3', level: 92, category: 'Frontend' },
@@ -138,16 +178,16 @@ const Portfolio = () => {
 
 
   return (
+
     <div className="portfolio" style={{
       '--primary-color': customization.primaryColor,
       '--accent-color': customization.accentColor
     }}>
 
-
       {/* Floating Navigation */}
       <nav className="nav-floating">
         <div className="nav-items">
-          {['hero', 'about', 'work', 'skills', 'contact'].map((section) => (
+          {['hero', 'about', 'education', 'experience', 'work', 'skills', 'contact'].map((section) => (
             <button
               key={section}
               className={`nav-item ${activeSection === section ? 'active' : ''}`}
@@ -168,7 +208,7 @@ const Portfolio = () => {
           <button className="close-menu" onClick={() => setIsMenuOpen(false)}>
             <X size={24} />
           </button>
-          {['hero', 'about', 'work', 'skills', 'contact'].map((section) => (
+          {['hero', 'about', 'education', 'experience', 'work', 'skills', 'contact'].map((section) => (
             <button
               key={section}
               className="mobile-nav-item"
@@ -179,8 +219,6 @@ const Portfolio = () => {
           ))}
         </div>
       )}
-
-
 
       {/* Hero Section */}
       <section id="hero" ref={sectionRefs.hero} className="hero section">
@@ -208,10 +246,9 @@ const Portfolio = () => {
           <h2 className="section-title">About Me</h2>
           <div className="about-content">
             <div className="about-image">
-<img className="about-img" src={myImage}/>
-{/* <img className="about-img" src='https://media.licdn.com/dms/image/v2/D4D03AQFlEBS7QrY43Q/profile-displayphoto-shrink_400_400/B4DZTp2dinHAAg-/0/1739090156700?e=1758153600&v=beta&t=eTgCqOtgKz6yRVoI3pjzRlyYY57GsjFnNwyIycNWRWk'/>
-                  */}
-                  </div>
+              <img className="about-img" src={myImage} />
+
+            </div>
             <div className="about-text">
               <p>
                 I'm a passionate full-stack developer with expertise in building scalable web applications
@@ -233,6 +270,67 @@ const Portfolio = () => {
                 web development.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="education" ref={sectionRefs.education} className="section">
+        <div className="container">
+          <h2 className="section-title">Education</h2>
+          <div className="education-timeline">
+            {education.map((edu, index) => (
+              <div key={index} className="education-item">
+                <div className="education-dot"></div>
+                <div className="education-content">
+                  <div className="education-type">{edu.type}</div>
+                  <h3 className="education-degree">{edu.degree}</h3>
+                  <div className="education-field">{edu.field}</div>
+                  <div className="education-institution">{edu.institution}</div>
+                  <div className="education-duration">{edu.duration}</div>
+                  <p className="education-description">{edu.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="experience" ref={sectionRefs.experience} className="section">
+        <div className="container">
+          <h2 className="section-title">Work Experience</h2>
+          <div className="experience-timeline">
+            {workExperience.map((exp, index) => (
+              <div key={index} className="experience-item">
+                <div className="experience-dot"></div>
+                <div className="experience-content">
+                  <div className="experience-type">{exp.type}</div>
+                  <h3 className="experience-position">{exp.position}</h3>
+                  <div className="experience-company">{exp.company}</div>
+                  <div className="experience-location">{exp.location}</div>
+                  <div className="experience-duration">{exp.duration}</div>
+                  <p className="experience-description">{exp.description}</p>
+
+                  {/* Responsibilities List */}
+                  <div className="experience-responsibilities">
+                    <h4 className="responsibilities-title">Key Responsibilities:</h4>
+                    <ul className="responsibilities-list">
+                      {exp.responsibilities.map((responsibility, idx) => (
+                        <li key={idx} className="responsibility-item">
+                          {responsibility}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Technologies Used */}
+                  <div className="experience-tech">
+                    {exp.technologies.map((tech, idx) => (
+                      <span key={idx} className="experience-tech-tag">{tech}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
